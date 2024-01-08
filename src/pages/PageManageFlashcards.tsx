@@ -1,5 +1,7 @@
-export const PageManageFlashcards= () => {
-	return (
-		<p>This is the manage flashcards page.</p>
-	)
-}
+import { useContext } from "react";
+import { AppContext } from "../AppContext";
+
+export const PageManageFlashcards = () => {
+	const { flashcards } = useContext(AppContext);
+	return <p>There are {flashcards.length} flashcards:</p>;
+};
