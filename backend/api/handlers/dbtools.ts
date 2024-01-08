@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { JSONFile } from 'lowdb/node';
 import { Low } from 'lowdb';
-import { IDatabase } from '../../interfaces';
+import { IDatabase } from '../../../shared/interfaces';
 
 export const getDb = async () => {
 	const projectBasePath = process.cwd();
