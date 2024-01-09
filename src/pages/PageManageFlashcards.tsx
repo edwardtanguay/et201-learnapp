@@ -10,7 +10,7 @@ export const PageManageFlashcards = () => {
 	const { flashcards } = useContext(AppContext);
 	const [isAdding, setIsAdding] = useState(false);
 	const [newFlashcard, setNewFlashcard] =
-		useState<INewFlashcard>(blankNewFlashcard);
+		useState<INewFlashcard>(structuredClone(blankNewFlashcard));
 
 	const handleNewFlashcardFieldChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -31,6 +31,12 @@ export const PageManageFlashcards = () => {
 		const _newFlashcard = structuredClone(newFlashcard);
 		setNewFlashcard(_newFlashcard);
 	};
+
+	const handleCancelAddForm = () => {
+		setNewFlashcard(structuredClone(blankNewFlashcard));
+		setIsAdding(false);
+	}
+
 	return (
 		<>
 			<p>There are {flashcards.length} flashcards:</p>
@@ -85,14 +91,14 @@ export const PageManageFlashcards = () => {
 							<td>
 								<div className="flex gap-2">
 									<FaFloppyDisk className="cursor-pointer text-[#222] hover:text-[#1d411b]" />
-									<MdCancel className="cursor-pointer text-[#222] hover:text-[#592727]" />
+									<MdCancel onClick={handleCancelAddForm} className="cursor-pointer text-[#222] hover:text-[#592727]" />
 								</div>
 							</td>
 						</tr>
 					)}
 					{flashcards.map((flashcard) => {
 						return (
-							<tr>
+							<tr key={flashcard.suuid}>
 								<td className="font-mono">{flashcard.suuid}</td>
 								<td>{flashcard.category}</td>
 								<td>{flashcard.front}</td>
