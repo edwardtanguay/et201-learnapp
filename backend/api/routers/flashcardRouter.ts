@@ -22,7 +22,8 @@ flashcardRouter.get('/:suuid', (req, res) => {
 flashcardRouter.post('/', async (req, res) => {
 	const newFlashcard: INewFlashcard = req.body;
 	const flashcard = await flashcardHandlers.addFlashcard(newFlashcard);
-	res.json(flashcard);
+	res.status(201).json({flashcard, message: ""});
+	// res.status(500).json({flashcard: {}, message: 'database not available'})
 });
 
 flashcardRouter.put('/', async (req, res) => {

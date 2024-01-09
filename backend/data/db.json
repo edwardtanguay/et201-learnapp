@@ -19,16 +19,16 @@
       "back": "git log --pretty=format:\"%h - %s - %an\" "
     },
     {
-      "suuid": "3bCd45",
-      "category": "linux",
-      "front": "navigate to the home directory",
-      "back": "cd ~"
+      "suuid": "b5ulpi",
+      "category": "111",
+      "front": "222",
+      "back": "333"
     },
     {
-      "suuid": "7iJk89",
-      "category": "linux",
-      "front": "create a new file",
-      "back": "touch index.html"
+      "suuid": "nujnbG",
+      "category": "werw",
+      "front": "eerer",
+      "back": "erer"
     }
   ]
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useState } from "react";
 import { AppContext } from "../AppContext";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
@@ -7,10 +8,11 @@ import { FaFloppyDisk } from "react-icons/fa6";
 import { INewFlashcard, blankNewFlashcard } from "../shared/interfaces";
 
 export const PageManageFlashcards = () => {
-	const { flashcards } = useContext(AppContext);
+	const { flashcards, handleSaveFlashcard } = useContext(AppContext);
 	const [isAdding, setIsAdding] = useState(false);
-	const [newFlashcard, setNewFlashcard] =
-		useState<INewFlashcard>(structuredClone(blankNewFlashcard));
+	const [newFlashcard, setNewFlashcard] = useState<INewFlashcard>(
+		structuredClone(blankNewFlashcard)
+	);
 
 	const handleNewFlashcardFieldChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -35,7 +37,21 @@ export const PageManageFlashcards = () => {
 	const handleCancelAddForm = () => {
 		setNewFlashcard(structuredClone(blankNewFlashcard));
 		setIsAdding(false);
-	}
+	};
+
+	const handleSaveAddForm = async () => {
+		try {
+			const response = await handleSaveFlashcard(newFlashcard);
+			if (response.message === "ok") {
+				handleCancelAddForm();
+			}
+		} catch (e: any) {
+			console.log(e.message);
+			alert(
+				"Sorry, we cannot save the flaschard at this time. Try again later."
+			);
+		}
+	};
 
 	return (
 		<>
@@ -65,7 +81,10 @@ export const PageManageFlashcards = () => {
 								<input
 									value={newFlashcard.category}
 									onChange={(e) =>
-										handleNewFlashcardFieldChange(e,'category')
+										handleNewFlashcardFieldChange(
+											e,
+											"category"
+										)
 									}
 									className="w-full"
 								/>
@@ -74,7 +93,10 @@ export const PageManageFlashcards = () => {
 								<input
 									value={newFlashcard.front}
 									onChange={(e) =>
-										handleNewFlashcardFieldChange(e,'front')
+										handleNewFlashcardFieldChange(
+											e,
+											"front"
+										)
 									}
 									className="w-full"
 								/>
@@ -83,15 +105,21 @@ export const PageManageFlashcards = () => {
 								<input
 									value={newFlashcard.back}
 									onChange={(e) =>
-										handleNewFlashcardFieldChange(e,'back')
+										handleNewFlashcardFieldChange(e, "back")
 									}
 									className="w-full"
 								/>
 							</td>
 							<td>
 								<div className="flex gap-2">
-									<FaFloppyDisk className="cursor-pointer text-[#222] hover:text-[#1d411b]" />
-									<MdCancel onClick={handleCancelAddForm} className="cursor-pointer text-[#222] hover:text-[#592727]" />
+									<FaFloppyDisk
+										onClick={handleSaveAddForm}
+										className="cursor-pointer text-[#222] hover:text-[#1d411b]"
+									/>
+									<MdCancel
+										onClick={handleCancelAddForm}
+										className="cursor-pointer text-[#222] hover:text-[#592727]"
+									/>
 								</div>
 							</td>
 						</tr>
